@@ -27,8 +27,8 @@ A Django-based suite that integrates:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/django-multi-utility-suite.git
-   cd django-multi-utility-suite
+   git clone https://github.com/ayazkhan1410/DjangoMultiToolbox.git
+
    ```
 2. Install dependencies:
    ```bash
