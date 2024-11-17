@@ -1,0 +1,85 @@
+{% extends "automation/base.html" %}
+
+{% block title %}
+<title>DataFlow | Signup</title>
+{% endblock %}
+
+{% block body %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card shadow-lg p-5" style="width: 500px; margin-top: -30px;">
+    <h2 class="text-center text-primary mb-4">Create an Account</h2>
+    {% include "automation/alerts.html" %}
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="name" class="form-label">Username <span class="text-muted">(Unique, no spaces)</span></label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+
+      <div class="mb-3 position-relative">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+        <div class="form-text">
+          <ul>
+            <li>At least 8 characters long</li>
+            <li>Contains both uppercase and lowercase letters</li>
+          </ul>
+        </div>
+        <span class="position-absolute" style="right: 10px; top: 43px; cursor: pointer;">
+          <i class="bi bi-eye-slash" id="togglePassword1"></i>
+        </span>
+      </div>
+
+      <div class="mb-3 position-relative">
+        <label for="confirm_password" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+        <span class="position-absolute" style="right: 10px; top: 35px; cursor: pointer;">
+          <i class="bi bi-eye-slash" id="togglePassword2"></i>
+        </span>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+      </div>
+    </form>
+
+    <p class="text-center mt-4">
+      Already have an account? <a href="{% url 'login' %}" class="text-primary text-decoration-none">Login</a>
+    </p>
+  </div>
+</div>
+<br>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const togglePassword1 = document.getElementById('togglePassword1');
+    const togglePassword2 = document.getElementById('togglePassword2');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm_password');
+
+    togglePassword1.addEventListener('click', function () {
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      this.classList.toggle('bi-eye');
+      this.classList.toggle('bi-eye-slash');
+    });
+
+    togglePassword2.addEventListener('click', function () {
+      const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+      confirmPassword.setAttribute('type', type);
+      this.classList.toggle('bi-eye');
+      this.classList.toggle('bi-eye-slash');
+    });
+  });
+</script
+
+{% endblock %}
+

@@ -1,0 +1,91 @@
+{% extends "automation/base.html" %}
+
+{% block title %}
+<title>Home Page</title>
+{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+
+  {% if user.is_authenticated %}
+  <!-- Main Content for Logged-in Users -->
+  <div class="row justify-content-center">
+
+    <!-- Import Data Card -->
+    <div class="col-md-5 mb-4">
+      <div class="card shadow-lg text-center">
+        <div class="card-body">
+          <h4 class="card-title text-primary">Import Data</h4>
+          <p class="card-text">
+            Upload a CSV file to import data into the system.
+          </p>
+          <a href="{% url 'import_data' %}" class="btn btn-primary btn-lg w-100">Go to Import</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export Data Card -->
+<div class="col-md-5 mb-4">
+  <div class="card shadow-lg text-center">
+    <div class="card-body">
+      <h4 class="card-title text-success">Export Data</h4>
+      <p class="card-text text-success">
+        Select a model to export data as a CSV file.
+      </p>
+      <a href="{% url 'export_data' %}" class="btn btn-success btn-lg w-100 rounded-pill">
+        Go to Export
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Bulk Email Send Card -->
+<div class="col-md-5 mb-4">
+  <div class="card shadow-lg text-center">
+    <div class="card-body">
+      <h4 class="card-title text-danger">Bulk Email Sending</h4>
+      <p class="card-text text-danger">
+        Easily send personalized emails to multiple recipients.
+      </p>
+      <a href="{% url 'send_email' %}" class="btn btn-danger btn-lg w-100 rounded-pill">
+        Send Emails
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Email Tracking Card -->
+<div class="col-md-5 mb-4">
+  <div class="card shadow-lg text-center">
+    <div class="card-body">
+      <h4 class="card-title text-dark">Email Tracking</h4>
+      <p class="card-text text-dark">
+        Monitor the performance of your emails with real-time tracking.
+      </p>
+      <a href="{% url 'track_dashboard' %}" class="btn btn-dark btn-lg w-100 rounded-pill">
+        Track Emails
+      </a>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+
+  {% else %}
+  <div class="text-center mt-5">
+    <h2>Welcome to DataFlow</h2>
+    <p class="lead mt-3">
+      DataFlow helps you easily manage and exchange your data. Upload your data using CSV files or export it
+      effortlessly into organized reports.
+    </p>
+    <p class="text-muted">
+      Please log in to access the Import and Export features.
+    </p>
+    <a href="{% url 'login' %}" class="btn btn-primary btn-lg mt-3">Login</a>
+  </div>
+  {% endif %}
+
+</div>
+
+{% endblock body %}

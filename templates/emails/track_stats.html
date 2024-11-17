@@ -1,0 +1,124 @@
+{% extends "automation/base.html" %}
+
+{% block title %}
+  <title>{{email.body}} Track Stats</title>
+{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+  <h2 class="text-center text-primary mb-4">Email Track Stats</h2>
+
+  <!-- Email Summary Card -->
+  <div class="card shadow-lg mb-4">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Email: {{email.body}}</h4>
+    </div>
+    <div class="card-body">
+      <p><strong>Subject:</strong> {{email.body}} </p>
+      <p><strong>Sent At:</strong> {{email.send_at}} </p>
+      <p><strong>Total Sent:</strong> {{total_sent}} </p>
+    </div>
+  </div>
+
+  <!-- Email Content Section -->
+  <div class="card shadow-lg mb-4">
+    <div class="card-header bg-secondary text-white">
+      <h4 class="mb-0">Email Content</h4>
+    </div>
+    <div class="card-body">
+      <div style="white-space: pre-wrap; word-wrap: break-word;">
+
+        <p>{{email.message | safe}}</p>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Attachments Section -->
+  <div class="card shadow-lg mb-4">
+    <div class="card-header bg-dark text-white">
+      <h4 class="mb-0">Attachments</h4>
+    </div>
+    <div class="card-body">
+      <ul class="list-group">
+        {% if email.attachment%}
+        <li class="list-group-item">
+          <a href="{{ email.attachment.url }}"">{{ email.attachment }}</a>
+        </li>
+        {% else %}
+        <p>No attachment associated with this Email</p>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Track Stats -->
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card text-white bg-info shadow-lg text-center">
+        <div class="card-body">
+          <h5 class="card-title">Total Opens</h5>
+          <p class="card-text fs-1">{{total_opens}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card text-white bg-warning shadow-lg text-center">
+        <div class="card-body">
+          <h5 class="card-title">Total Clicks</h5>
+          <p class="card-text fs-1">{{total_clicks}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subscriber Activity Table -->
+  <div class="card shadow-lg mt-4">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Subscriber Activity</h4>
+    </div>
+    <div class="card-body">
+      <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Subscriber Email</th>
+            <th>Opened At</th>
+            <th>Clicked At</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for subscriber, tracking in subscribers_with_status %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ subscriber.email_address }}</td>
+        
+            <td>
+              {% if tracking.0 %}
+                {{ tracking.0 }}
+              {% else %}
+                Not Opened yet
+              {% endif %}
+            </td>
+        
+            <td>
+              {% if tracking.1 %}
+                {{ tracking.1 }}
+              {% else %}
+                Not Clicked yet
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        
+        
+      </table>
+    </div>
+  </div>
+</div>
+<br>
+
+{% endblock body %}

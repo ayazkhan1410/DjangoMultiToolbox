@@ -1,0 +1,77 @@
+{% extends "automation/base.html" %}
+{% load static  %}
+
+{% block title %}
+  <title>Send Email</title>
+{% endblock title %}
+
+{% block body %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm p-4 border-0" style="border-radius: 12px;">
+        <h3 class="text-center text-primary mb-3" style="font-weight: 600;">Send Bulk Emails</h3>
+        
+        <!-- Include Alerts -->
+        {% include "automation/alerts.html" %}
+        
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <!-- Select Email List -->
+          <div class="mb-3">
+            <label for="email_list" class="form-label" style="font-weight: 500;">Select Email List</label>
+            <select class="form-select shadow-sm" id="email_list" name="email_list" required>
+              <option value="" selected disabled>Select an email list</option>
+              {% for list in email_list %}
+                <option value="{{ list.id }}">{{ list.email_list }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Email Body -->
+          <div class="mb-3">
+            <label for="body" class="form-label" style="font-weight: 500;">Subject</label>
+            <input type="text" class="form-control shadow-sm" id="body" name="body" 
+                   placeholder="Enter email subject" required>
+          </div>
+
+          <!-- Message -->
+          <div class="mb-3">
+            <label for="message" class="form-label" style="font-weight: 500;">Message</label>
+            <textarea class="form-control shadow-sm" id="message" name="message" rows="4" placeholder="Type your message here..." required></textarea>
+          </div>
+
+          <!-- File Attachment -->
+          <div class="mb-3">
+            <label for="attachment" class="form-label" style="font-weight: 500;">Attachment (optional)</label>
+            <input type="file" class="form-control shadow-sm" id="attachment" name="attachment">
+          </div>
+
+          <!-- Submit Button -->
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg w-100" 
+                    style="border-radius: 8px;">Send Emails</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Apply CKEditor to the message textarea
+  CKEDITOR.replace('message');
+</script>
+
+<!-- JavaScript to Hide Alert After 5 Seconds -->
+<script>
+  setTimeout(() => {
+    const alert = document.getElementById('alert-message');
+    if (alert) {
+      alert.remove();
+    }
+  }, 5000); // 5 seconds in milliseconds
+</script>
+
+{% endblock body %}

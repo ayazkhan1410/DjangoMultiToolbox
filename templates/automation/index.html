@@ -1,0 +1,57 @@
+{% extends "automation/base.html" %}
+
+{% block title %}
+<title>Home Page</title>
+{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+  <div class="card shadow-lg p-5" style="margin-top: -20px;">
+
+    <h1 class="text-center text-primary mb-4">Import Data From CSV File</h1>
+    <hr>
+
+    {% include "automation/alerts.html" %}
+
+    <form id="uploadForm" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="mb-4">
+        <label class="form-label fs-5" for="customFile">Upload CSV File</label>
+        <input type="file" class="form-control" id="customFile" name="file_path" required />
+        <small class="text-muted">Maximum file size: 10 MB</small>
+      </div>
+
+      <div class="mb-4">
+        <label for="modelSelect" class="form-label fs-5">Choose Model</label>
+        <select class="form-select" id="modelSelect" name="model_name" required>
+          <option selected disabled>Select a model...</option>
+          {% for model in custom_models %}
+          <option value="{{ model }}"> {{ model }} </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-lg mt-3">Upload</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<!-- JavaScript Validation -->
+<script>
+  document.getElementById('uploadForm').addEventListener('submit', function (e) {
+    const fileInput = document.getElementById('customFile');
+    const file = fileInput.files[0];
+
+    if (file && file.size > 10 * 1024 * 1024) { // 2 MB in bytes
+      alert('File size must be under 10 MB.');
+      e.preventDefault(); // Prevent form submission
+    }
+  });
+</script>
+<br>
+
+{% endblock body %}
