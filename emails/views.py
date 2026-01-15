@@ -17,8 +17,9 @@ def send_email(request):
         attachment = request.FILES.get('attachment')  
 
         try:
-            email_list = List.objects.get(id=email_list_id)   
-            
+            email_list = List.objects.get(id=email_list_id)
+            print("EMAIL LIST ====", email_list)
+
             email_obj = Email.objects.create(
                 email_list=email_list,
                 body=body,
